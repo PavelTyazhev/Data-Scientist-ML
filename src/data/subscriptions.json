@@ -1,0 +1,101 @@
+[
+  {
+    "id": "sub-001",
+    "title": "Яндекс Плюс (с Яндекс Музыкой)",
+    "amount": 399,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-07-16",
+    "status": "active"
+  },
+  {
+    "id": "sub-002",
+    "title": "СберПрайм",
+    "amount": 199,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-07-28",
+    "status": "active"
+  },
+  {
+    "id": "sub-003",
+    "title": "Коммунальные услуги (ЖКХ)",
+    "amount": 4500,
+    "currency": "RUB",
+    "category": "utility",
+    "next_payment_date": "2026-07-18",
+    "status": "active"
+  },
+  {
+    "id": "sub-004",
+    "title": "VK Музыка",
+    "amount": 169,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-08-05",
+    "status": "active"
+  },
+  {
+    "id": "sub-005",
+    "title": "Домашний интернет (Ростелеком)",
+    "amount": 800,
+    "currency": "RUB",
+    "category": "telecom",
+    "next_payment_date": "2026-07-19",
+    "status": "active"
+  },
+  {
+    "id": "sub-006",
+    "title": "Фитнес-клуб (World Class)",
+    "amount": 3500,
+    "currency": "RUB",
+    "category": "fitness",
+    "next_payment_date": "2026-07-25",
+    "status": "active"
+  },
+  {
+    "id": "sub-007",
+    "title": "Telegram Premium",
+    "amount": 299,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-07-20",
+    "status": "active"
+  },
+  {
+    "id": "sub-008",
+    "title": "Мобильная связь (МТС Тариф)",
+    "amount": 650,
+    "currency": "RUB",
+    "category": "telecom",
+    "next_payment_date": "2026-07-14",
+    "status": "inactive"
+  },
+  {
+    "id": "sub-009",
+    "title": "Онлайн-кинотеатр Иви (Ivi)",
+    "amount": 399,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-07-29",
+    "status": "active"
+  },
+  {
+    "id": "sub-010",
+    "title": "СберСтрахование квартиры",
+    "amount": 250,
+    "currency": "RUB",
+    "category": "finance",
+    "next_payment_date": "2026-08-12",
+    "status": "active"
+  },
+  {
+    "id": "sub-011",
+    "title": "Яндекс Диск (1 ТБ)",
+    "amount": 149,
+    "currency": "RUB",
+    "category": "subscription",
+    "next_payment_date": "2026-08-01",
+    "status": "active"
+  }
+]

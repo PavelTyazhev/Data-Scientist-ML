@@ -1,0 +1,6 @@
+{
+  "name": "Smart Registry of Subscriptions",
+  "description": "Fintech AI platform for managing personal subscriptions and regular payments with a ReAct reasoning agent.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
