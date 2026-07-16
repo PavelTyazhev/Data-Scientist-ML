@@ -16,6 +16,14 @@ export default function App() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isAgentLoading, setIsAgentLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Load subscriptions on startup
   const fetchSubscriptions = async () => {
@@ -108,7 +116,10 @@ export default function App() {
       const res = await fetch('/api/agent/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: queryText }),
+        body: JSON.stringify({ 
+          query: queryText,
+          currentDate: currentDate.toISOString().split('T')[0]
+        }),
       });
 
       const data = await res.json();
@@ -190,9 +201,9 @@ export default function App() {
 
           {/* User profile / Time info bar */}
           <div className="flex items-center gap-4 text-[10px] text-slate-500" id="info-bar">
-            <div className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1.5 rounded-lg border border-slate-200/60">
-              <Clock size={12} className="text-slate-400" />
-              <span>Эмулируемая дата: <strong className="text-indigo-600">2026-07-15</strong></span>
+            <div className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1.5 rounded-lg border border-slate-200/60 shadow-sm">
+              <Clock size={12} className="text-indigo-500 animate-pulse" />
+              <span>Текущая дата и время: <strong className="text-indigo-600 font-mono">{currentDate.toLocaleString('ru-RU')}</strong></span>
             </div>
           </div>
         </div>
@@ -217,6 +228,7 @@ export default function App() {
               onAdd={handleAddSubscription}
               onEdit={handleEditSubscription}
               onDelete={handleDeleteSubscription}
+              currentDate={currentDate}
             />
             {/* Developer Test Console directly below database */}
             <TestConsole onRunTests={handleRunTestsOnBackend} subscriptions={subscriptions} />

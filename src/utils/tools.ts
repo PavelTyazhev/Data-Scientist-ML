@@ -65,11 +65,11 @@ const FALLBACK_RATES: Record<string, number> = {
  */
 export async function convert_currency(
   amount: number,
-  from: string,
-  to: string
+  from_currency: string,
+  to_currency: string
 ): Promise<{ amount: number; source: 'api' | 'fallback'; rate: number }> {
-  const fromUpper = from.toUpperCase();
-  const toUpper = to.toUpperCase();
+  const fromUpper = from_currency.toUpperCase();
+  const toUpper = to_currency.toUpperCase();
 
   if (amount === 0) {
     return { amount: 0, source: 'fallback', rate: 1 };
@@ -79,33 +79,28 @@ export async function convert_currency(
     return { amount, source: 'fallback', rate: 1 };
   }
 
-  // Frankfurter API does not support RUB. If either currency is RUB, use fallback.
-  const hasRub = fromUpper === 'RUB' || toUpper === 'RUB';
+  try {
+    // Fetch latest rates with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-  if (!hasRub) {
-    try {
-      // Fetch latest rates with timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const url = `https://api.frankfurter.dev/v2/rate/${fromUpper}/${toUpper}`;
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
 
-      const url = `https://api.frankfurter.app/latest?amount=${amount}&from=${fromUpper}&to=${toUpper}`;
-      const response = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeoutId);
-
-      if (response.ok) {
-        const data = await response.json() as any;
-        const rate = data.rates[toUpper];
-        if (rate !== undefined) {
-          return {
-            amount: Number((amount * rate).toFixed(2)),
-            source: 'api',
-            rate,
-          };
-        }
+    if (response.ok) {
+      const data = await response.json() as any;
+      const rate = data.rate;
+      if (rate !== undefined && typeof rate === 'number') {
+        return {
+          amount: Number((amount * rate).toFixed(2)),
+          source: 'api',
+          rate: Number(rate.toFixed(4)),
+        };
       }
-    } catch (e) {
-      console.warn('Frankfurter API failed or timed out. Falling back to internal rates.', e);
     }
+  } catch (e) {
+    console.warn('Frankfurter API failed or timed out. Falling back to internal rates.', e);
   }
 
   // Fallback conversion logic

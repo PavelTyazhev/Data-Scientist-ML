@@ -97,5 +97,14 @@
     "category": "subscription",
     "next_payment_date": "2026-08-01",
     "status": "active"
+  },
+  {
+    "id": "sub-012",
+    "title": "Netflix Premium",
+    "amount": 15.49,
+    "currency": "USD",
+    "category": "subscription",
+    "next_payment_date": "2026-07-22",
+    "status": "active"
   }
 ]

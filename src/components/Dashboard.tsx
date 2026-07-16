@@ -33,6 +33,7 @@ interface DashboardProps {
   onAdd: (sub: Omit<Subscription, 'id'>) => Promise<void>;
   onEdit: (id: string, sub: Partial<Subscription>) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  currentDate: Date;
 }
 
 export default function Dashboard({
@@ -41,6 +42,7 @@ export default function Dashboard({
   onAdd,
   onEdit,
   onDelete,
+  currentDate,
 }: DashboardProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -74,9 +76,9 @@ export default function Dashboard({
 
   const activeSubscriptions = subscriptions.filter((s) => s.status === 'active');
 
-  // Calculates total spend in RUB in next 30 days (simulation date is 2026-07-15)
-  const SIMULATION_DATE = new Date('2026-07-15');
-  const THIRTY_DAYS_LATER = new Date('2026-08-14');
+  // Calculates total spend in RUB in next 30 days (simulation date is dynamic)
+  const SIMULATION_DATE = currentDate;
+  const THIRTY_DAYS_LATER = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
 
   const upcoming30DaysSpendingRub = activeSubscriptions.reduce((acc, sub) => {
     const payDate = new Date(sub.next_payment_date);
@@ -215,7 +217,9 @@ export default function Dashboard({
             <h3 className="text-xl font-bold font-display text-emerald-600 mt-1">
               {upcoming30DaysSpendingRub.toLocaleString('ru-RU', { maximumFractionDigits: 0 })} <span className="text-xs text-slate-500">₽</span>
             </h3>
-            <p className="text-[10px] text-emerald-600/80 mt-1">Списания по 14 августа</p>
+            <p className="text-[10px] text-emerald-600/80 mt-1">
+              Списания по {THIRTY_DAYS_LATER.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}
+            </p>
           </div>
           <div className="p-3 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200/60">
             <Calendar size={20} />
